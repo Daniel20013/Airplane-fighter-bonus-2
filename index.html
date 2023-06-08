@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Airplane fighter bonus 2</title>
+</head>
+<body>
+    <h2 id="title">Airplane fighter</h2>
+    <div id="timer">00:00:00</div>
+    <div class="container">
+        <button id="start" onclick="startGame()">Start</button>
+        <div>
+            <img class="plane" src="assets/Fighter jet (top view)-240757.png">
+            <div class="containerObstacles">
+                <img class="obstacles" src="assets/airplane_u2708_icon_256x256.png">
+            </div>
+            <div class="containerProjectile">
+                <img class="projectile" src="assets/Projectile.png">
+            </div>
+        </div>
+        <div class="gameOver">
+            <img id="imgGameOver" src="assets/game-over.jpg">
+            <button id="restart" onclick="restartGame()">Restart</button>
+            <p id="score"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
