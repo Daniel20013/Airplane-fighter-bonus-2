@@ -1,0 +1,101 @@
+.container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70rem;
+    height: 60rem;
+    background-color: rgb(200, 200, 200);
+    z-index: 1;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#title {
+    font-size: 2em;
+}
+
+.plane {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-10%, -50%);
+    height: 8em;
+    transition: all 0.5s ease;
+    display: none;
+}
+
+.obstacles {
+    position: absolute;
+    left: 76%;
+    top: 10px;
+    display: none;
+    transition: top 10s;
+}
+
+.obstacles.down {
+    top: 59rem;
+}
+
+#timer {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    display: none;
+    font-size: 2em;
+}
+
+#start {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    border-radius: 5%;
+    background-color: aqua;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.gameOver {
+    display: none;
+}
+
+#imgGameOver {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 35rem;
+}
+
+#restart {
+    position: absolute;
+    left: 50%;
+    top: 85%;
+    transform: translate(-50%, -15%);
+    font-size: 3rem;
+    border-radius: 5%;
+    background-color: aqua;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+#score {
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translate(-50%, -95%);
+    font-size: 3em;
+}
+
+.projectile {
+    position: absolute;
+    display: none;
+    transition: top 3s;
+}
+
+.projectile.up {
+    top: 2% !important;
+}
