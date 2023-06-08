@@ -7,72 +7,44 @@ let puncture = 0;
 let gameOver = document.querySelector(".gameOver");
 let appearanceTime = 1500;
 let moveDistance = 52;
-let whichObjection = true;
 let clones = [];
 
-function collisionObjects(clone, projectile) {
-    const rect1 = clone.getBoundingClientRect();
-    const rect2 = projectile.getBoundingClientRect();
-    if (
-        rect1.left < rect2.right &&
-        rect1.right > rect2.left &&
-        rect1.top < rect2.bottom &&
-        rect1.bottom > rect2.top
-    ) {
-        ++puncture;
-        clone.remove();
-        projectile.remove();
+function collisionObjects(projectile) {
+    const rect1 = projectile.getBoundingClientRect();
+    for (let i = 0; i < clones.length; ++i) {
+        const rect2 = clones[i].getBoundingClientRect();
+        if (
+            rect1.left < rect2.right &&
+            rect1.right > rect2.left &&
+            rect1.top < rect2.bottom &&
+            rect1.bottom > rect2.top
+        ) {
+            console.log("impact");
+            ++puncture;
+            clones[i].remove();
+            projectile.remove();
+        }
     }
 }
 
 function objection() {
-        const containerProjectile = document.querySelector(".containerProjectile");
-        const containerObstacles = document.querySelector(".containerObstacles");
-        let projectile = document.createElement("img");
-        let img = document.createElement("img");
-        let clone;
-    if (whichObjection === true) {
-        img.src = "assets/airplane_u2708_icon_256x256.png";
-        clone = img.cloneNode(true);
-        clone.classList.add("obstacles");
-        clone.style.left = Math.floor((86 - 1 + 1) * Math.random()) + "%";
-        clone.style.display = "block";
-        containerObstacles.appendChild(clone);
-        clones.push(clone);
-
+    const containerObstacles = document.querySelector(".containerObstacles");
+    let clone = document.createElement("img");
+    clone.src = "assets/airplane_u2708_icon_256x256.png";
+    clone.classList.add("obstacles");
+    clone.style.left = Math.floor((86 - 1 + 1) * Math.random()) + "%";
+    clone.style.display = "block";
+    containerObstacles.appendChild(clone);
+    clones.push(clone);
+    setTimeout (function() {
+        clone.classList.add("down");
+        setInterval (function() {
+            checkCollision(clone);
+        }, 100);
         setTimeout (function() {
-            clone.classList.add("down");
-
-            setInterval (function() {
-                checkCollision(clone);
-            }, 100);
-
-            setTimeout (function() {
-                clone.remove();
-            }, 5000);
-        }, 100);
-    }
-    if (whichObjection === false) {
-        projectile.src = "assets/Projectile.png";
-        projectile.classList.add("projectile");
-        projectile.style.left = (moveDistance + 2) + "%";
-        projectile.style.top = 89 + "%";
-        projectile.style.height = "2rem";
-        projectile.style.display = "block";
-        containerProjectile.appendChild(projectile);
-
-        setTimeout(function() {
-            projectile.classList.add("up");
-
-            setInterval (function() {
-                collisionObjects(clone, projectile);
-            }, 100);
-
-            setTimeout(function() {
-                projectile.remove();
-            }, 2800);
-        }, 100);
-    }
+            clone.remove();
+        }, 5000);
+    }, 100);
 }
 
 function pad(value) {
@@ -107,6 +79,27 @@ function modifyAppearanceTime() {
     obstaclesIntervalID = setInterval(objection, appearanceTime);
 }
 
+function release() {
+    const containerProjectile = document.querySelector(".containerProjectile");
+    let projectile = document.createElement("img");
+    projectile.src = "assets/Projectile.png";
+    projectile.classList.add("projectile");
+    projectile.style.left = (moveDistance + 2) + "%";
+    projectile.style.top = 89 + "%";
+    projectile.style.height = "2rem";
+    projectile.style.display = "block";
+    containerProjectile.appendChild(projectile);
+    setTimeout(function() {
+        projectile.classList.add("up");
+        setInterval (function() {
+            collisionObjects(projectile);
+        }, 100);
+        setTimeout(function() {
+            projectile.remove();
+        }, 2800);
+    }, 100);
+}
+
 function startTimer() {
     timerID = setInterval(function() {
         ++seconds;
@@ -124,10 +117,7 @@ function startTimer() {
         let time = pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
         document.getElementById("timer").textContent = time;
     }, 1000);
-    obstaclesIntervalID = setInterval (function() {
-        whichObjection = true;
-        objection();
-    }, appearanceTime);
+    obstaclesIntervalID = setInterval (objection, appearanceTime);
 }
 
 function startGame() {
@@ -154,9 +144,7 @@ function startGame() {
             }
         }
         if (event.key === " ") {
-            whichObjection = false;
-            objection();
-            whichObjection = true;
+            release();
         }
     });
 }
@@ -169,4 +157,6 @@ function restartGame() {
     appearanceTime = 1500;
     clearInterval(obstaclesIntervalID);
     obstaclesIntervalID = setInterval(objection, appearanceTime);
+    moveDistance = 52;
+    plane.style.left = moveDistance + "%";
 }
